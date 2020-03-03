@@ -3,6 +3,8 @@ package life.manong.community.controller;
 import life.manong.community.Provider.GithubProvider;
 import life.manong.community.dto.AccessTokenDTO;
 import life.manong.community.dto.GithubUser;
+import life.manong.community.mapper.UserMapper;
+import life.manong.community.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.UUID;
 
 @Controller
 public class AuthorizeController {
@@ -25,6 +28,10 @@ public class AuthorizeController {
     @Value("${github.redirect_uri}")
     private String redirect_uri;
 
+    @Autowired
+    private UserMapper userMapper;
+
+
     @GetMapping("/callback")
     public String callback(@RequestParam(name="code")String code,
                            @RequestParam(name="state")String state, HttpServletRequest request){
@@ -35,10 +42,17 @@ public class AuthorizeController {
         accessTokenDTO.setState(state);
         accessTokenDTO.setRedirect_uri(redirect_uri);
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
-        GithubUser user = githubProvider.getUser(accessToken);
-        if(user!=null){
+        GithubUser githubUser = githubProvider.getUser(accessToken);
+        if(githubUser!=null){
             /*登陆成功*/
-            request.getSession().setAttribute("user",user);
+            User user = new User();
+            user.setName(githubUser.getName());
+            user.setAccountId(String.valueOf(githubUser.getId()));
+            user.setToken(UUID.randomUUID().toString());
+            user.setGetCreate(System.currentTimeMillis());
+            user.setGetModified(System.currentTimeMillis());
+            userMapper.insert(user);
+            request.getSession().setAttribute("user",githubUser);
             return "redirect:/";
         }else{
             /*登陆失败*/

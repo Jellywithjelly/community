@@ -1,0 +1,14 @@
+server:
+  port: 8887
+
+github:
+  client :
+    id : Iv1.cf5d3bbfacf1eba7
+    secret : e22e59f5d1d13e3e8f3f8eb32c6fb3dd8c2e5485
+  redirect_uri : http://localhost:8887/callback
+spring:
+  datasource:
+    url : jdbc:mysql://127.0.0.1:3306/manongConmmunity?serverTimezone=UTC
+    username: root
+    password: ws231862
+    driver-class-name: com.mysql.cj.jdbc.Driver
