@@ -8,6 +8,7 @@ public class User {
   private String token;
   private Long getCreate;
   private Long getModified;
+  private String bio;
 
 
   public long getId() {
@@ -60,5 +61,13 @@ public class User {
 
   public void setGetModified(Long getModified) {
     this.getModified = getModified;
+  }
+
+  public String getBio() {
+    return bio;
+  }
+
+  public void setBio(String bio) {
+    this.bio = bio;
   }
 }
