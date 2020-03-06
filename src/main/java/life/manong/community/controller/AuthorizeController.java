@@ -48,13 +48,9 @@ public class AuthorizeController {
         GithubUser githubUser = githubProvider.getUser(accessToken);
         if(githubUser!=null){
             /*登陆成功*/
-            User user = new User();
-            user.setName(githubUser.getName());
-            user.setAccountId(String.valueOf(githubUser.getId()));
-            user.setToken(UUID.randomUUID().toString());
-            user.setGetCreate(System.currentTimeMillis());
-            user.setGetModified(System.currentTimeMillis());
-            user.setBio(githubUser.getBio());
+            User user =  User.builder().name(githubUser.getName()).accountId(String.valueOf(githubUser.getId())).
+                    token(UUID.randomUUID().toString()).getCreate(System.currentTimeMillis()).
+                    getModified(System.currentTimeMillis()).bio(githubUser.getBio()).build();
             userMapper.insert(user);
             response.addCookie(new Cookie("token",user.getToken()));
             return "redirect:/";

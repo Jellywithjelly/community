@@ -2,17 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>发布 - 码农社区</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
-    <link rel="stylesheet" href="css/community.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="css/community.css"/>
     <script type="application/javascript" src="js/bootstrap.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">码农社区</span>
             </button>
             <a class="navbar-brand" href="#">码农社区</a>
@@ -25,15 +26,21 @@
                 <button type="submit" class="btn btn-default">GO</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li th:if="${session.user == null}"><a href="https://github.com/login/oauth/authorize?client_id=Iv1.cf5d3bbfacf1eba7&redirect_uri=http://127.0.0.1:8887/callback&scope=user&state=1">登录</a></li>
+                <li th:if="${session.user != null}">
+                    <a href="/publish">发布</a>
+                </li>
                 <li class="dropdown" th:if="${session.user != null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-haspopup="true" aria-expanded="false" th:text="${session.user.getName()}"> <span class="caret"></span></a>
+                       aria-haspopup="true" aria-expanded="false" th:text="${session.user.getName()}"> <span
+                            class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">消息中心</a></li>
                         <li><a href="#">个人资料</a></li>
                         <li><a href="#">退出登录</a></li>
                     </ul>
+                </li>
+                <li th:if="${session.user == null}">
+                    <a href="https://github.com/login/oauth/authorize?client_id=Iv1.cf5d3bbfacf1eba7&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登录</a>
                 </li>
             </ul>
         </div>
@@ -41,28 +48,38 @@
 </nav>
 <div class="container-fluid main">
     <div class="row">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12"  >
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h2>
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-            </h2><hr>
-            <form action="">
-               <div class="form-group">
-                   <label for="title">问题标题(简单扼要)</label>
-                   <input type="text" class="form-control" placeholder="问题标题..." name="title" id="title">
-               </div>
+                <span class="glyphicon glyphicon-plus" aria-hidden="true">发布</span>
+            </h2>
+            <hr>
+            <form action="/publish" method="post">
                 <div class="form-group">
-                    <label for="descritption">问题补充(必填，请参照右侧提示填写)</label>
-                    <textarea name="descritption" class="form-control" id="descritption" cols="30" rows="10"></textarea>
+                    <label for="title">问题标题(简单扼要)</label>
+                    <input type="text" class="form-control" placeholder="问题标题..." th:value="${title}"  name="title" id="title">
+                </div>
+                <div class="form-group">
+                    <label for="description">问题补充(必填，请参照右侧提示填写)</label>
+                    <textarea name="description" class="form-control" id="description" th:value="${description}" cols="30" rows="10"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="tag">添加标签:</label>
-                    <input type="text" class="form-control" placeholder="请输入标签，以，隔开" name="tag" id="tag">
+                    <input type="text" class="form-control" placeholder="请输入标签，以，隔开" th:value="${tag}" name="tag" id="tag">
                 </div>
-                <button type="submit" class="btn btn-success btn-publish">提交</button>
+                <div class="container-fluid main">
+                    <div class="row">
+                        <div class="alert alert-danger col-lg-9 col-md-12 col-sm-12 col-xs-12" th:text="${error}"
+                             th:if="${error!=null}">
+                        </div>
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                            <button type="submit" class="btn btn-success btn-publish">发布</button>
+                        </div>
+                    </div>
+                </div>
             </form>
 
         </div>
-        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12"  >
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <h2>问题发起指南</h2>
             ·问题标题:请用精简的语言描述您发布的问题，不超过25个字
             ·问题补充:详细补充您的问题内容，确保问题描述清晰直观，并提供一些相关资料

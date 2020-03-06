@@ -5,7 +5,7 @@ github:
   client :
     id : Iv1.cf5d3bbfacf1eba7
     secret : 9d360a777be0c1ef2c07d9393f7f28a4b29fe473
-  redirect_uri : http://127.0.0.1:8887/callback
+  redirect_uri : http://localhost:8887/callback
 spring:
   datasource:
     url : jdbc:mysql://127.0.0.1:3306/manongcommunity?serverTimezone=UTC

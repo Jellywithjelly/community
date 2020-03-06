@@ -1,73 +1,20 @@
 package life.manong.community.model;
 
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
 public class User {
 
-  private long id;
-  private String name;
+  private Long id;  //用户id
+  private String name; //用户名
   private String accountId;
-  private String token;
+  private String token; // 用户令牌
   private Long getCreate;
   private Long getModified;
   private String bio;
 
 
-  public long getId() {
-    return id;
-  }
 
-  public void setId(long id) {
-    this.id = id;
-  }
-
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-
-  public String getAccountId() {
-    return accountId;
-  }
-
-  public void setAccountId(String accountId) {
-    this.accountId = accountId;
-  }
-
-
-  public String getToken() {
-    return token;
-  }
-
-  public void setToken(String token) {
-    this.token = token;
-  }
-
-
-  public Long getGetCreate() {
-    return getCreate;
-  }
-
-  public void setGetCreate(Long getCreate) {
-    this.getCreate = getCreate;
-  }
-
-  public Long getGetModified() {
-    return getModified;
-  }
-
-  public void setGetModified(Long getModified) {
-    this.getModified = getModified;
-  }
-
-  public String getBio() {
-    return bio;
-  }
-
-  public void setBio(String bio) {
-    this.bio = bio;
-  }
 }
