@@ -14,6 +14,7 @@ public class User {
   private Long getCreate;
   private Long getModified;
   private String bio;
+  private String avatarUrl; // 用户头像
 
 
 

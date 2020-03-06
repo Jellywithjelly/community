@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Mapper
 @Component
 public interface UserMapper {
-    @Insert("insert into user (name,account_id,token,get_create,get_modified,bio) values (#{name},#{accountId},#{token},#{getCreate},#{getModified},#{bio})")
+    @Insert("insert into user (name,account_id,token,get_create,get_modified,bio,avatar_url) values (#{name},#{accountId},#{token},#{getCreate},#{getModified},#{bio},#{avatarUrl})")
     void insert(User user);
     @Select("select * from user where token = #{token}")
     User findByToken(@Param("token") String token);

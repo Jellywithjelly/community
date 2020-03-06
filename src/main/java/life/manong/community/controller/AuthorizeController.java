@@ -38,19 +38,15 @@ public class AuthorizeController {
     public String callback(@RequestParam(name="code")String code,
                            @RequestParam(name="state")String state,
                            HttpServletRequest request, HttpServletResponse response){
-        AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
-        accessTokenDTO.setClient_id(client_id);
-        accessTokenDTO.setClient_secret(client_secret);
-        accessTokenDTO.setCode(code);
-        accessTokenDTO.setState(state);
-        accessTokenDTO.setRedirect_uri(redirect_uri);
+        AccessTokenDTO accessTokenDTO = AccessTokenDTO.builder().client_id(client_id).client_secret(client_secret).
+                code(code).state(state).redirect_uri(redirect_uri).build();
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser githubUser = githubProvider.getUser(accessToken);
         if(githubUser!=null){
             /*登陆成功*/
             User user =  User.builder().name(githubUser.getName()).accountId(String.valueOf(githubUser.getId())).
                     token(UUID.randomUUID().toString()).getCreate(System.currentTimeMillis()).
-                    getModified(System.currentTimeMillis()).bio(githubUser.getBio()).build();
+                    getModified(System.currentTimeMillis()).bio(githubUser.getBio()).avatarUrl(githubUser.getAvatar_url()).build();
             userMapper.insert(user);
             response.addCookie(new Cookie("token",user.getToken()));
             return "redirect:/";
