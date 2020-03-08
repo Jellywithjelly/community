@@ -65,8 +65,9 @@ public class PublishController {
             return "publish";
         }
         Question question =  Question.builder().title(title).description(description).tag(tag).creator(user.getId()).
-                        getCreate(System.currentTimeMillis()).getModified(System.currentTimeMillis()).build();
+                getCreate(System.currentTimeMillis()).getModified(System.currentTimeMillis()).build();
         questionMapper.insert(question);
         return "redirect:/";
     }
+
 }

@@ -13,7 +13,7 @@ public class Question {
   private String description; //问题描述
   private Long getCreate; //创建时间
   private Long getModified; //修改时间
-  private Long creator; //创建人
+  private Integer creator; //创建人
   private int commentCount; //评论数
   private int viewCount; // 阅读数
   private int likeCount; //点赞数

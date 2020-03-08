@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class User {
 
-  private Long id;  //用户id
+  private Integer id;  //用户id
   private String name; //用户名
   private String accountId;
   private String token; // 用户令牌
